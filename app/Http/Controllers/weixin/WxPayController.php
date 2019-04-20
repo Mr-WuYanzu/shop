@@ -167,7 +167,6 @@ class WxPayController extends Controller
         $response=[
             'code'=>2,
         ];
-        dd($res->toArray()['pay_status']);
         if($res){
             if($res->pay_status==1){
                 $response=[
