@@ -163,9 +163,11 @@ class WxPayController extends Controller
     //验证微信支付是否成功
     public function paystatus(){
         $res=Order::where(['oid'=>$_GET['oid'],'is_del'=>0])->first();
+
         $response=[
             'code'=>2,
         ];
+        dd($res->toArray()['pay_status']);
         if($res){
             if($res->toArray()['pay_status']==1){
                 $response=[
@@ -173,8 +175,6 @@ class WxPayController extends Controller
                     'font'=>'支付成功'
                 ];
             }
-        }else{
-
         }
         return json_encode($response);
     }
