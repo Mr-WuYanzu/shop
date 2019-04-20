@@ -67,7 +67,7 @@ class CarController extends Controller
     public function car(){
     	$session_token=Session::getId();
     	$uid=Auth::id();
-    	$carInfo=Car::where(['uid'=>$uid,'p_wx_goods.status'=>0,'session_token'=>$session_token])
+    	$carInfo=Car::where(['uid'=>$uid,'p_wx_car.status'=>0,'p_wx_goods.status'=>0,'session_token'=>$session_token])
     					->join('p_wx_goods','p_wx_goods.goods_id','=','p_wx_car.goods_id')
     					->get();
     	// dd($car_model);
