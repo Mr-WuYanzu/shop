@@ -162,11 +162,12 @@ class WxPayController extends Controller
     }
     //验证微信支付是否成功
     public function paystatus(){
-        $res=Order::where(['oid'=>$_GET['oid'],'is_del'=>0])->first();
+        $res=Order::where(['oid'=>$_GET['oid']])->first();
 
         $response=[
             'code'=>2,
         ];
+
         if($res){
             if($res->pay_status==1){
                 $response=[
