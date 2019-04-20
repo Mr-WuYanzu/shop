@@ -90,6 +90,7 @@ class CarController extends Controller
     //购物车结算生成订单
     public function success(){
     	$uid=Auth::id();
+
     	$carInfo=Car::where(['uid'=>$uid,'p_wx_goods.status'=>0,'p_wx_car.status'=>0])
     					->join('p_wx_goods','p_wx_goods.goods_id','=','p_wx_car.goods_id')
     					->get();
@@ -125,7 +126,7 @@ class CarController extends Controller
     		];
     		Order_tail::insert($info);
     	}
-    	
+    	Car::where(['uid'=>Auth::id()])->update(['status'=>1]);
         return redirect('/weixin/order');
     }
     public function order(){
