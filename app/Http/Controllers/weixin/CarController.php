@@ -125,7 +125,11 @@ class CarController extends Controller
     		];
     		Order_tail::insert($info);
     	}
-    	$order=Order::where(['uid'=>Auth::id(),'is_del'=>0])->get()->toArray();
-    	return view('weixin.order',['order'=>$order]);
+    	
+        return redirect('/weixin/order');
+    }
+    public function order(){
+        $order=Order::where(['uid'=>Auth::id(),'is_del'=>0])->get()->toArray();
+        return view('weixin.order',['order'=>$order]);
     }
 }

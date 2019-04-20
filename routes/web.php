@@ -32,3 +32,8 @@ Route::get('/weixin/wxPay/{order_sn}',"weixin\WxPayController@test");
 Route::get('/weixin/paystatus',"weixin\WxPayController@paystatus");
 //支付成功跳转页面
 Route::get('/weixin/supay',"weixin\WxPayController@supay");
+//微信支付回调地址
+Route::post('/weixin/pay/notify','weixin\WxPayController@notify_url');
+//订单页面
+Route::get('/weixin/order',"weixin\CarController@order");
+
