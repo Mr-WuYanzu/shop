@@ -130,7 +130,7 @@ class CarController extends Controller
         return redirect('/weixin/order');
     }
     public function order(){
-        $order=Order::where(['uid'=>Auth::id(),'is_del'=>0])->get()->toArray();
+        $order=Order::where(['uid'=>Auth::id(),'is_del'=>0])->orderBy('add_time','desc')->get()->toArray();
         return view('weixin.order',['order'=>$order]);
     }
 }
