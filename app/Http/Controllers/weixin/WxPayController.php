@@ -66,6 +66,7 @@ class WxPayController extends Controller
             if($sign){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
                 $out_trade_no=$xml->out_trade_no;
+                dd($out_trade_no);
                 // echo $out_trade_no;die;
                 $res=Order::where(['order_sn'=>$out_trade_no])->update(['is_del'=>1,'pay_status'=>1]);
                 $goodsInfo=Order_tail::where(['order_sn'=>$out_trade_no])->get();
