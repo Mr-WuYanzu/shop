@@ -169,7 +169,7 @@ class WxPayController extends Controller
         ];
         dd($res->toArray()['pay_status']);
         if($res){
-            if($res->toArray()['pay_status']==1){
+            if($res->pay_status==1){
                 $response=[
                     'code'=>1,
                     'font'=>'支付成功'
