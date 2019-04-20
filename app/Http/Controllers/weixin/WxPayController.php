@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\model\Car;
 use App\model\Order;
 use App\model\Order_tail;
+use DB;
 class WxPayController extends Controller
 {
 	public $weixin_unifiedorder_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
@@ -64,7 +65,14 @@ class WxPayController extends Controller
             $sign = true;
             if($sign){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
-                
+                $out_trade_no=$xml->out_trade_no;
+                // echo $out_trade_no;die;
+                $res=Order::where(['order_sn'=>$out_trade_no])->update(['is_del'=>1,'pay_status'=>1]);
+                $goodsInfo=Order_tail::where(['order_sn'=>$out_trade_no])->get();
+                foreach($goodsInfo->toArray() as $k=>$v){
+                    $good=DB::table('p_wx_goods')->where(['goods_id'=>$v['goods_id']])->first();
+                    DB::table('p_wx_goods')->where(['goods_id'=>$v['goods_id']])->update(['goods_num'=>$good->goods_num-$v['buy_num']]);
+                }
             }else{
                 //TODO 验签失败
                 echo '验签失败，IP: '.$_SERVER['REMOTE_ADDR'];
