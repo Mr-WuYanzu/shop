@@ -21,19 +21,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 //主页
 Route::get('/weixin/index',"weixin\CarController@index");
 //添加购物车
-Route::get('/weixin/addCar/{goods_id?}',"weixin\CarController@addCar");
+Route::get('/weixin/addCar/{goods_id?}',"weixin\CarController@addCar")->middleware('checkLogin');
 //购物车列表
-Route::get('/weixin/car',"weixin\CarController@car");
+Route::get('/weixin/car',"weixin\CarController@car")->middleware('checkLogin');
 //购物车结算生成订单
-Route::post('/weixin/success',"weixin\CarController@success");
+Route::post('/weixin/success',"weixin\CarController@success")->middleware('checkLogin');
 //微信支付
-Route::get('/weixin/wxPay/{order_sn}',"weixin\WxPayController@test");
+Route::get('/weixin/wxPay/{order_sn}',"weixin\WxPayController@test")->middleware('checkLogin');
 //验证微信支付
 Route::get('/weixin/paystatus',"weixin\WxPayController@paystatus");
 //支付成功跳转页面
-Route::get('/weixin/supay',"weixin\WxPayController@supay");
+Route::get('/weixin/supay',"weixin\WxPayController@supay")->middleware('checkLogin');
 //微信支付回调地址
 Route::post('/weixin/pay/notify','weixin\WxPayController@notify_url');
 //订单页面
-Route::get('/weixin/order',"weixin\CarController@order");
+Route::get('/weixin/order',"weixin\CarController@order")->middleware('checkLogin');
 
