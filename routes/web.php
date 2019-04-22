@@ -20,6 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //主页
 Route::get('/weixin/index',"weixin\CarController@index");
+//商品详情
+Route::get('/weixin/detail',"weixin\CarController@detail")->middleware('checkLogin');
 //添加购物车
 Route::get('/weixin/addCar/{goods_id?}',"weixin\CarController@addCar")->middleware('checkLogin');
 //购物车列表
@@ -36,4 +38,5 @@ Route::get('/weixin/supay',"weixin\WxPayController@supay")->middleware('checkLog
 Route::post('/weixin/pay/notify','weixin\WxPayController@notify_url');
 //订单页面
 Route::get('/weixin/order',"weixin\CarController@order")->middleware('checkLogin');
+
 

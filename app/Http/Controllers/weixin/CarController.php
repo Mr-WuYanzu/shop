@@ -11,6 +11,7 @@ use App\model\Order;
 use App\model\Order_tail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class CarController extends Controller
 {
@@ -129,8 +130,16 @@ class CarController extends Controller
     	Car::where(['uid'=>Auth::id()])->update(['status'=>1]);
         return redirect('/weixin/order');
     }
+    //订单页面
     public function order(){
         $order=Order::where(['uid'=>Auth::id(),'is_del'=>0])->orderBy('add_time','desc')->get()->toArray();
         return view('weixin.order',['order'=>$order]);
+    }
+    //商品详情页
+    public function detail(){
+        $goods_id=$_GET['goods_id'];
+        $goodsInfo=DB::table('p_wx_goods')->where(['goods_id'=>$goods_id])->first();
+        $history_num=Redis::incr($goods_id);
+        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num]);
     }
 }

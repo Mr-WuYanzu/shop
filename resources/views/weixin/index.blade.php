@@ -7,7 +7,7 @@
 	<div style="padding-left:500px;padding-top:300px">
 		<ul>
 			@foreach($data as $k=>$v)
-			<li goods_id="{{$v->goods_id}}">商品名称>>{{$v->goods_name}}------价格>>{{$v->goods_price}} <input type="button" value="加入购物车" class="but"></li>
+			<li goods_id="{{$v->goods_id}}">商品名称>><a href="/weixin/detail?goods_id={{$v->goods_id}}">{{$v->goods_name}}</a>------价格>>{{$v->goods_price}} <input type="button" value="加入购物车" class="but"></li>
 			@endforeach
 
 		</ul>---------------------------------------------------------------------------
