@@ -31,7 +31,7 @@
 						var img=',';
 						console.log(localIds);
 						$.each(localIds,function(k,v){
-							$img += v;
+							img += v;
 						})
 						console.log(img);
 					}
