@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 class JsSdkController extends Controller
 {
@@ -39,6 +40,7 @@ class JsSdkController extends Controller
     }
     //图片上传
     public function upload(){
+    	$client=new Client();
     	$serverId=$_GET['serverId'];
     	$sId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId."\n";
     	file_put_contents('logs/wx_upload.logs', $sId,FILE_APPEND);

@@ -5,6 +5,8 @@
 </head>
 <body>
 	<button id="img" style="width:90px;height:35px;margin:0 auto">请选择图片</button>
+	<button id="share" style="width:90px;height:35px;margin:0 auto">分享</button>
+
 	<img src="" id="img0" width="130px">
 	<img src="" id="img1" width="130px">
 	<img src="" id="img2" width="130px">
@@ -26,6 +28,7 @@
 		});
 		console.log("{{$sdk_config['signature']}}");
 		wx.ready(function(){
+			//图片
 			$('#img').click(function(){
 				wx.chooseImage({
 					count: 5, // 默认9
@@ -54,7 +57,18 @@
 					}
 				});
 			})
-		    
+			//分享
+		    $('#share').click(function(){
+			    wx.updateAppMessageShareData({ 
+			        title: '小哥哥进来玩呀', // 分享标题
+			        desc: '嘿嘿嘿', // 分享描述
+			        link: 'http://1809zhanghaibo.comcto.com/weixin/jssdk', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			        imgUrl: '', // 分享图标
+			        success: function (res) {
+			          // 设置成功
+			        }
+			    })
+		    })
 		});
 	</script>
 </body>
