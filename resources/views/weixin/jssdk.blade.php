@@ -15,6 +15,7 @@
 		    signature: "{{$sdk_config['signature']}}",// 必填，签名
 		    jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表
 		});
+		// console.log("{{$sdk_config['signature']}}");
 		wx.ready(function(){
 		    wx.chooseImage({
 				count: 5, // 默认9
