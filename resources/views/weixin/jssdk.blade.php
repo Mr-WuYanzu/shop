@@ -63,7 +63,7 @@
 			        title: '小哥哥进来玩呀', // 分享标题
 			        desc: '嘿嘿嘿', // 分享描述
 			        link: 'http://1809zhanghaibo.comcto.com/weixin/jssdk', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-			        imgUrl: '', // 分享图标
+			        imgUrl: 'https://img04.sogoucdn.com/net/a/04/link?url=https%3A%2F%2Fi02piccdn.sogoucdn.com%2Fa544ce13dad2697c&appid=122', // 分享图标
 			        success: function (res) {
 			          // 设置成功
 			        }
