@@ -24,7 +24,7 @@
 		    timestamp: "{{$sdk_config['timestamp']}}", // 必填，生成签名的时间戳
 		    nonceStr: "{{$sdk_config['nonceStr']}}", // 必填，生成签名的随机串
 		    signature: "{{$sdk_config['signature']}}",// 必填，签名
-		    jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表
+		    jsApiList: ['chooseImage','uploadImage','updateAppMessageShareData'] // 必填，需要使用的JS接口列表
 		});
 		console.log("{{$sdk_config['signature']}}");
 		wx.ready(function(){
