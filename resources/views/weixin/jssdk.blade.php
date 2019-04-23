@@ -29,10 +29,10 @@
 					success: function (res) {
 						var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 						var img='';
-						console.log(localIds);
 						$.each(localIds,function(k,v){
 							img += v+',';
 						})
+						img = substr(img,length.img-1);
 						console.log(img);
 					}
 				});
