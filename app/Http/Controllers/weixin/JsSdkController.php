@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Uri;
 
 class JsSdkController extends Controller
 {
@@ -45,9 +46,14 @@ class JsSdkController extends Controller
     	$sId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId."\n";
     	file_put_contents('logs/wx_upload.logs', $sId,FILE_APPEND);
     	$url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.getAccessToken().'&media_id='.$serverId;
-    	$img=file_get_contents($url);
-    	$img_name=time().'.jpg';
-    	Storage::put('weixin/img/'.$img_name, $img);
+    	$img=$client->get(new Uri($url));
+        //获取文件类型
+        $headers=$img->getHeaders();
+        $img_name=$headers['Content-disposition'][0];
+        $fileInfo=substr($img_name,'-15');
+        $img_name=substr(md5(time().mt_rand(1111,9999)),5,8).$fileInfo;
+        $img_name=rtrim($img_name,'"');
+    	Storage::put('weixin/img/'.$img_name, $img->getBody());
 
     }
 }
