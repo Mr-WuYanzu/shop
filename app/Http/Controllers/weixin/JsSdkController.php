@@ -39,7 +39,7 @@ class JsSdkController extends Controller
     //图片下载
     public function upload(){
     	$serverId=$_GET['serverId'];
-    	$serverId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId;
-    	file_put_contents('logs/wx_upload.logs', $serverId);
+    	$serverId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId."\n";
+    	file_put_contents('logs/wx_upload.logs', $serverId,FILE_APPEND);
     }
 }
