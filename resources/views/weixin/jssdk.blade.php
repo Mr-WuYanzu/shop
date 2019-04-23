@@ -5,6 +5,9 @@
 </head>
 <body>
 	<button id="img">请选择图片</button>
+	<img src="" id="img0">
+	<img src="" id="img1">
+	<img src="" id="img2">
 	<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
@@ -24,7 +27,7 @@
 					sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 					success: function (res) {
-						var localIds = res.localIds; // 
+						console.log(res.localIds);
 					}
 				});
 			})
