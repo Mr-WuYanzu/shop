@@ -4,10 +4,16 @@
 	<title></title>
 </head>
 <body>
-	<button id="img">请选择图片</button>
-	<img src="" id="img0">
-	<img src="" id="img1">
-	<img src="" id="img2">
+	<button id="img" style="width:90px;height:35px;margin:0 auto">请选择图片</button>
+	<img src="" id="img0" width="30px">
+	<img src="" id="img1" width="30px">
+	<img src="" id="img2" width="30px">
+	<img src="" id="img3" width="30px">
+	<img src="" id="img4" width="30px">
+	<img src="" id="img5" width="30px">
+	<img src="" id="img6" width="30px">
+	<img src="" id="img7" width="30px">
+	<img src="" id="img8" width="30px">
 	<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
@@ -28,14 +34,18 @@
 					sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 					success: function (res) {
 						var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-						var img='';
 						$.each(localIds,function(k,v){
-							img += v+',';
-							var note='#img'+k;
 							$(note).attr('src',v);
+							// 上传图片
+							wx.uploadImage({
+								localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
+								isShowProgressTips: 1, // 默认为1，显示进度提示
+								success: function (res) {
+								var serverId = res.serverId; // 返回图片的服务器端ID
+									console.log(serverId);
+								}
+							});
 						})
-						img = img.substr(0,img.length-1);
-						console.log(img);
 					}
 				});
 			})
