@@ -4,7 +4,7 @@
 	<title></title>
 </head>
 <body>
-
+	<button id="img">请选择图片</button>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
 		wx.config({
@@ -16,16 +16,16 @@
 		    jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表
 		});
 		// console.log("{{$sdk_config['signature']}}");
-		wx.ready(function(){
-		    wx.chooseImage({
-				count: 5, // 默认9
-				sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-				sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-				success: function (res) {
-				var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-				}
-			});
-		});
+		// wx.ready(function(){
+		//     wx.chooseImage({
+		// 		count: 5, // 默认9
+		// 		sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+		// 		sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+		// 		success: function (res) {
+		// 		var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+		// 		}
+		// 	});
+		// });
 	</script>
 </body>
 </html>
