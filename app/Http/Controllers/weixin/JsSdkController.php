@@ -40,6 +40,6 @@ class JsSdkController extends Controller
     public function upload(){
     	$serverId=$_GET['serverId'];
     	$serverId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId;
-    	file_put_contents('logs/wx_upload.logs', $serverId)
+    	file_put_contents('logs/wx_upload.logs', $serverId);
     }
 }
