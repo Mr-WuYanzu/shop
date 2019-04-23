@@ -5,6 +5,7 @@
 </head>
 <body>
 	<button id="img">请选择图片</button>
+	<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
 		wx.config({
