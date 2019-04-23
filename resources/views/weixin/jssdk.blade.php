@@ -42,12 +42,10 @@
 								isShowProgressTips: 1, // 默认为1，显示进度提示
 								success: function (r) {
 									var serverId = r.serverId; // 返回图片的服务器端ID
-									//
 									$.ajax({
 										url:"/weixin/upload/?serverId="+serverId,
 										type:'get',
 										success:function(re){
-
 										}
 									})
 								}

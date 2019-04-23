@@ -5,6 +5,7 @@ namespace App\Http\Controllers\weixin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class JsSdkController extends Controller
 {
@@ -36,10 +37,15 @@ class JsSdkController extends Controller
 
     	return view('weixin.jssdk',$data);
     }
-    //图片下载
+    //图片上传
     public function upload(){
     	$serverId=$_GET['serverId'];
-    	$serverId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId."\n";
-    	file_put_contents('logs/wx_upload.logs', $serverId,FILE_APPEND);
+    	$sId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId."\n";
+    	file_put_contents('logs/wx_upload.logs', $sId,FILE_APPEND);
+    	$url='https://api.weixin.qq.com/cgi-bin/media/get?access_token='.getAccessToken().'&media_id='.$serverId;
+    	$img=file_get_contents($url);
+    	$img_name=time().'.jpg';
+    	Storage::put('weixin/img/'.$img_name, $img);
+
     }
 }
