@@ -5,15 +5,15 @@
 </head>
 <body>
 	<button id="img" style="width:90px;height:35px;margin:0 auto">请选择图片</button>
-	<img src="" id="img0" width="30px">
-	<img src="" id="img1" width="30px">
-	<img src="" id="img2" width="30px">
-	<img src="" id="img3" width="30px">
-	<img src="" id="img4" width="30px">
-	<img src="" id="img5" width="30px">
-	<img src="" id="img6" width="30px">
-	<img src="" id="img7" width="30px">
-	<img src="" id="img8" width="30px">
+	<img src="" id="img0" width="130px">
+	<img src="" id="img1" width="130px">
+	<img src="" id="img2" width="130px">
+	<img src="" id="img3" width="130px">
+	<img src="" id="img4" width="130px">
+	<img src="" id="img5" width="130px">
+	<img src="" id="img6" width="130px">
+	<img src="" id="img7" width="130px">
+	<img src="" id="img8" width="130px">
 	<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
@@ -41,7 +41,7 @@
 								localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
 								isShowProgressTips: 1, // 默认为1，显示进度提示
 								success: function (r) {
-									var serverId = res.serverId; // 返回图片的服务器端ID
+									var serverId = r.serverId; // 返回图片的服务器端ID
 									//
 									$.ajax({
 										url:"/weixin/upload/?serverId="+serverId,
