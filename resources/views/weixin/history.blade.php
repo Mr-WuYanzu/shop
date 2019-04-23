@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>购物车</title>
+	<title>浏览历史</title>
 </head>
 <body>
-	<div style="float:left">
-		<h1>商品详情</h1>
-		<p>商品名称:{{$goodsInfo->goods_name}}</p>
-		<p>商品价格:{{$goodsInfo->goods_price}}</p>
-		<p>浏览次数：{{$history_num}}</p>
-	</div>
-	<div style="float:right">
+	<div style="padding-left:500px;padding-top:300px">
 		<h1>浏览历史</h1>
 		<ul>
 			@foreach($data as $k=>$v)
@@ -21,3 +15,11 @@
 	</div>
 </body>
 </html>
+<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$('.but').click(function(){
+		var goods_id=$(this).parent().attr('goods_id');
+		location.href="/weixin/addCar/"+goods_id;
+	})
+	
+</script>

@@ -17,7 +17,22 @@ class CarController extends Controller
 {
 	//主页
 	public function index(){
-		$data=DB::table('p_wx_goods')->where('status',0)->get();
+        $key_click='click:view';
+        $goods_id=Redis::zRevRange($key_click,0,1000000);
+        $data=[];
+        foreach($goods_id as $k=>$v){
+            $where=[
+                'goods_id'=>$v
+            ];
+            $data[]=DB::table('p_wx_goods')->where($where)->first();
+        }
+        $res=DB::table('p_wx_goods')->where(['status'=>0])->whereNotIn('goods_id',$goods_id)->get();
+        if($res){
+            foreach($res as $k=>$v){
+                $data[]=$res[$k];
+            }
+        }
+        
 		return view('weixin.index',['data'=>$data]);
 	}
 	//添加购物车
@@ -137,9 +152,43 @@ class CarController extends Controller
     }
     //商品详情页
     public function detail(){
-        $goods_id=$_GET['goods_id'];
+        $goods_id=intval($_GET['goods_id']);
+        if(!$goods_id){
+            die('请选择商品后再来');
+        }
         $goodsInfo=DB::table('p_wx_goods')->where(['goods_id'=>$goods_id])->first();
-        $history_num=Redis::incr($goods_id);
-        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num]);
+        if(!$goodsInfo){
+            header('Refresh:3;url/weixin/index');
+            die('请选择正确的商品，三秒后会跳转至主页');
+        }
+        $history_num=Redis::incr($goods_id);        //浏览量
+        //点击量
+        $key_click='click:view';
+        Redis::zAdd($key_click,$history_num,$goods_id);
+        //浏览历史
+        $key_history='history:view:'.Auth::id();    //浏览历史
+        Redis::zAdd($key_history,time(),$goods_id); //存入有序合集
+        $goods_id=Redis::zRevRange($key_history,0,10000000000,true);    //倒序
+        $data=[];
+        foreach($goods_id as $k=>$v){
+            $where=[
+                'goods_id'=>$k
+            ];
+            $data[]=DB::table('p_wx_goods')->where($where)->first();
+        }
+        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data]);
+    }
+    //商品浏览历史页面
+    public function history(){
+        $key_history='history:view:'.Auth::id();
+        $goods_id=Redis::zRevRange($key_history,0,10000000000,true);
+        $data=[];
+        foreach($goods_id as $k=>$v){
+            $where=[
+                'goods_id'=>$k
+            ];
+            $data[]=DB::table('p_wx_goods')->where($where)->first();
+        }
+        return view('weixin.history',['data'=>$data]);
     }
 }
