@@ -32,7 +32,7 @@
 						$.each(localIds,function(k,v){
 							img += v+',';
 						})
-						img = substr(img,length.img-1);
+						img = substring(img,length.img-1);
 						console.log(img);
 					}
 				});
