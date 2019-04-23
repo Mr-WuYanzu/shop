@@ -31,7 +31,7 @@
 						var img='';
 						$.each(localIds,function(k,v){
 							img += v+',';
-							var note='#img'+$k;
+							var note='#img'+k;
 							$(note).attr('src',v);
 						})
 						img = img.substr(0,img.length-1);
