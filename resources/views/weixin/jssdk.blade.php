@@ -35,6 +35,7 @@
 					success: function (res) {
 						var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 						$.each(localIds,function(k,v){
+							var note='#img'+k;
 							$(note).attr('src',v);
 							// 上传图片
 							wx.uploadImage({
