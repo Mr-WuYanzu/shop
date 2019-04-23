@@ -19,8 +19,8 @@ class JsSdkController extends Controller
     	// dd($_SERVER);
     	//当前网页的url
     	$url=$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] .$_SERVER['REQUEST_URI'];
-    	echo $url;die;
-    	$str=$jsapi_ticket.'&'.$noncestr.'&'.$timestamp.'&'.$url;
+    	// echo $url;die;
+    	$str="jsapi_ticket=$jsapi_ticket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
     	$sign=sha1($str);
     	// echo $sign;die;
     	$sdk_config=[
