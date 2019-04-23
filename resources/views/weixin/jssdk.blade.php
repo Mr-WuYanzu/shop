@@ -18,7 +18,6 @@
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
 		wx.config({
-		    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 		    appId:"{{$sdk_config['appId']}}", // 必填，公众号的唯一标识
 		    timestamp: "{{$sdk_config['timestamp']}}", // 必填，生成签名的时间戳
 		    nonceStr: "{{$sdk_config['nonceStr']}}", // 必填，生成签名的随机串
@@ -41,9 +40,16 @@
 							wx.uploadImage({
 								localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
 								isShowProgressTips: 1, // 默认为1，显示进度提示
-								success: function (res) {
-								var serverId = res.serverId; // 返回图片的服务器端ID
-									console.log(serverId);
+								success: function (r) {
+									var serverId = res.serverId; // 返回图片的服务器端ID
+									//
+									$.ajax({
+										url:"/weixin/upload/?serverId="+serverId,
+										type:'get',
+										success:function(re){
+
+										}
+									})
 								}
 							});
 						})

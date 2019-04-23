@@ -42,5 +42,7 @@ Route::post('/weixin/pay/notify','weixin\WxPayController@notify_url');
 Route::get('/weixin/order',"weixin\CarController@order")->middleware('checkLogin');
 //微信jssdk
 Route::get('weixin/jssdk',"weixin\JsSdkController@jssdk");
+//图片上传
+Route::get('weixin/upload',"weixin\JsSdkController@upload");
 
 

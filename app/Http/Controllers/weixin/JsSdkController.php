@@ -36,4 +36,10 @@ class JsSdkController extends Controller
 
     	return view('weixin.jssdk',$data);
     }
+    //图片下载
+    public function upload(){
+    	$serverId=$_GET['serverId'];
+    	$serverId=date('Y-m-d h:i').'>>>>>>>>>'.$serverId;
+    	file_put_contents('logs/wx_upload.logs', $serverId)
+    }
 }
