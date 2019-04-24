@@ -24,6 +24,7 @@
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
 		wx.config({
+			debug:true,
 		    appId:"{{$sdk_config['appId']}}", // 必填，公众号的唯一标识
 		    timestamp: "{{$sdk_config['timestamp']}}", // 必填，生成签名的时间戳
 		    nonceStr: "{{$sdk_config['nonceStr']}}", // 必填，生成签名的随机串
