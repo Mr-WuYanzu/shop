@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/aa', function () {
-    echo urlencode("http://1809zhanghaibo.comcto.com/aa");
+    echo urlencode("http://1809zhanghaibo.comcto.com/wxweb/hd");
 });
 
 Auth::routes();
