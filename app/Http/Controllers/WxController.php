@@ -38,7 +38,7 @@ class WxController extends Controller
 						  <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
 						  <CreateTime>'.time().'</CreateTime>
 						  <MsgType><![CDATA[news]]></MsgType>
-						  <ArticleCount>1</ArticleCount>
+						  <ArticleCount>5</ArticleCount>
 						  <Articles>
 						    <item>
 						      <Title><![CDATA['.$v->goods_name.']]></Title>
