@@ -18,20 +18,22 @@ class WxwebController extends Controller
 	  // 用户信息入库
 	  $openid=$userInfo['openid'];
 	  $res=User::where('openid',$openid)->first();
+	  dd($res);
 	  if($res){
-	  	$data=[
-		  	'openid'=>$openid,
-		  	'user_name'=>$userInfo['nickname'],
-		  	'user_sex'=>$userInfo['sex'],
-		  	'user_coutry'=>$userInfo['coutry'],
-		  	'user_province'=>$userInfo['province'],
-		  	'user_city'=>$userInfo['city'],
-		  	'headimgurl'=>$userInfo['headimgurl']
-		  ];
-	   	  User::insert($data);
-	   	  echo '欢迎:'.$userInfo['nickname'];
-	  }else{
 	  		echo '欢迎回来:'.$res['user_name'];
+	  }else{
+	  		
+	  		$data=[
+			  	'openid'=>$openid,
+			  	'user_name'=>$userInfo['nickname'],
+			  	'user_sex'=>$userInfo['sex'],
+			  	'user_coutry'=>$userInfo['coutry'],
+			  	'user_province'=>$userInfo['province'],
+			  	'user_city'=>$userInfo['city'],
+			  	'headimgurl'=>$userInfo['headimgurl']
+		  	];
+	   	  	User::insert($data);
+	   	  	echo '欢迎:'.$userInfo['nickname'];
 	  }
 	  
     }
