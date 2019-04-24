@@ -18,7 +18,7 @@ class WxwebController extends Controller
 	  // 用户信息入库
 	  $openid=$userInfo['openid'];
 	  $res=User::where('openid',$openid)->first();
-	  dd($res);
+	  // dd($res);
 	  if($res){
 	  		echo '欢迎回来:'.$res['user_name'];
 	  }else{
