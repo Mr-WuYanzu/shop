@@ -49,29 +49,7 @@
 		               
 		            }
 		        })
-		        //分享给朋友
-		    wx.onMenuShareAppMessage({
-				title: '朋友', // 分享标题
-				desc: 'd', // 分享描述
-				link: 'http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='+"{{$goodsInfo->goods_id}}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-				imgUrl: 'http://1809zhanghaibo.comcto.com/img/link.jpg', // 分享图标
-				type: 'link', // 分享类型,music、video或link，不填默认为link
-				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-				success: function () {
-				// 用户点击了分享后执行的回调函数
-				alert('分享成功');
-				}
-			});
-			//分享朋友圈
-			wx.onMenuShareTimeline({
-			    title: '朋友圈', // 分享标题
-			    link: 'http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='+"{{$goodsInfo->goods_id}}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-			    imgUrl: 'http://1809zhanghaibo.comcto.com/img/link.jpg', // 分享图标
-			    success: function () {
-			    // 用户点击了分享后执行的回调函数
-			    alert('分享朋友圈成功');
-			},
-		    });
+		   
 		});
 	</script>
 </body>
