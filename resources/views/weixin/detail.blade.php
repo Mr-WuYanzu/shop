@@ -32,7 +32,7 @@
 		});
 		wx.ready(function(){
  			$('#share').click(function(){
- 				nMenuShareTimeline({
+ 				wx.nMenuShareTimeline({
 				    title: '小哥哥来呀', // 分享标题
 				    link: 'http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='+"{{$goodsInfo->goods_id}}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 				    imgUrl: 'http://1809zhanghaibo.comcto.com/img/link.jpg', // 分享图标
