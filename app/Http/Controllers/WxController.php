@@ -31,14 +31,15 @@ class WxController extends Controller
         	// echo "ss";
         	// echo $obj->Content;
         	if($obj->Content=="最新商品"){
-        		$data=DB::table('p_wx_goods')->orderBy('add_time','desc')->limit(5)->get();
-        		foreach($data as $k=>$v){
+        		$v=DB::table('p_wx_goods')->orderBy('add_time','desc')->first();
+        		// dd($data);
+        		// foreach($data as $k=>$v){
         			echo '<xml>
 						  <ToUserName><![CDATA['.$openid.']]></ToUserName>
 						  <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
 						  <CreateTime>'.time().'</CreateTime>
 						  <MsgType><![CDATA[news]]></MsgType>
-						  <ArticleCount>5</ArticleCount>
+						  <ArticleCount>1</ArticleCount>
 						  <Articles>
 						    <item>
 						      <Title><![CDATA['.$v->goods_name.']]></Title>
@@ -48,7 +49,7 @@ class WxController extends Controller
 						    </item>
 						  </Articles>
 						</xml>';
-        		}
+        		// }
         	}
         }
     }
