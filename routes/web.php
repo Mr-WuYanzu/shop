@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/aa', function () {
+    echo urlencode("http://1809zhanghaibo.comcto.com/aa");
+});
 
 Auth::routes();
 
@@ -48,5 +51,11 @@ Route::get('/weixin/order',"weixin\CarController@order")->middleware('checkLogin
 Route::get('weixin/jssdk',"weixin\JsSdkController@jssdk");
 //图片上传
 Route::get('weixin/upload',"weixin\JsSdkController@upload");
+
+//删除超过三十分钟未支付的订单
+Route::get('weixin/delorder','crontab\CrontabController@delOrder');
+//网页授权回调地址
+Route::get('wxweb/hd',"WxwebController@hd");
+
 
 
