@@ -18,6 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//微信第一次访问
+Route::get('/weixin/valid',"WxController@valid");
+//微信推送消息
+Route::post('/weixin/valid',"WxController@event");
 //主页
 Route::get('/weixin/index',"weixin\CarController@index");
 //商品详情
