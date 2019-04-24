@@ -27,7 +27,7 @@ class WxwebController extends Controller
 			  	'openid'=>$openid,
 			  	'user_name'=>$userInfo['nickname'],
 			  	'user_sex'=>$userInfo['sex'],
-			  	'user_coutry'=>$userInfo['coutry'],
+			  	'user_country'=>$userInfo['country'],
 			  	'user_province'=>$userInfo['province'],
 			  	'user_city'=>$userInfo['city'],
 			  	'headimgurl'=>$userInfo['headimgurl']
