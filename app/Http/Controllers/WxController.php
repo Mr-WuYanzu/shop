@@ -31,7 +31,7 @@ class WxController extends Controller
         	// echo "ss";
         	// echo $obj->Content;
         	if($obj->Content=="最新商品"){
-        		$data=DB::table('p_wx_goods')->orderBy('add_time','desc')->first();
+        		$data=DB::table('p_wx_goods')->orderBy('add_time','desc')->limit(5)->get();
         		// dd($data);
         		foreach($data as $k=>$v){
         			echo '<xml>
