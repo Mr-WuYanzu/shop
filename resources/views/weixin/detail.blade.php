@@ -27,7 +27,7 @@
 		    timestamp: "{{$sdk_config['timestamp']}}", // 必填，生成签名的时间戳
 		    nonceStr: "{{$sdk_config['nonceStr']}}", // 必填，生成签名的随机串
 		    signature: "{{$sdk_config['signature']}}",// 必填，签名
-		    jsApiList: ['updateAppMessageShareData','onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表
+		    jsApiList: ['updateTimelineShareData','updateAppMessageShareData'] // 必填，需要使用的JS接口列表
 		});
 		 wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
 		 	//分享给qq空间和朋友圈
