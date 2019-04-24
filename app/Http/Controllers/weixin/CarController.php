@@ -152,6 +152,26 @@ class CarController extends Controller
     }
     //商品详情页
     public function detail(){
+        $token=getAccessToken();
+        $appid=env('APPID');
+        //计算签名
+        $noncestr=Str::random(12);
+        $jsapi_ticket=createticket($token);
+        $timestamp=time();
+        // dd($_SERVER);
+        //当前网页的url
+        $url=$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] .$_SERVER['REQUEST_URI'];
+        // echo $url;die;
+        $str="jsapi_ticket=$jsapi_ticket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
+        $sign=sha1($str);
+        // echo $sign;die;
+        $sdk_config=[
+            'appId'=> $appid, 
+            'timestamp'=> $timestamp, 
+            'nonceStr'=> $noncestr, 
+            'signature'=> $sign,
+        ];
+
         $goods_id=intval($_GET['goods_id']);
         if(!$goods_id){
             die('请选择商品后再来');
@@ -176,7 +196,7 @@ class CarController extends Controller
             ];
             $data[]=DB::table('p_wx_goods')->where($where)->first();
         }
-        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data]);
+        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data,'sdk_config'=>$sdk_config]);
     }
     //商品浏览历史页面
     public function history(){
