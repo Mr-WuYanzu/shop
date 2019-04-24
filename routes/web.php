@@ -25,9 +25,9 @@ Route::post('/weixin/valid',"WxController@event");
 //主页
 Route::get('/weixin/index',"weixin\CarController@index");
 //商品详情
-Route::get('/weixin/detail',"weixin\CarController@detail")->middleware('checkLogin');
+Route::get('/weixin/detail',"weixin\CarController@detail");
 //浏览历史
-Route::get('/weixin/history',"weixin\CarController@history")->middleware('checkLogin');
+Route::get('/weixin/history',"weixin\CarController@history");
 //添加购物车
 Route::get('/weixin/addCar/{goods_id?}',"weixin\CarController@addCar")->middleware('checkLogin');
 //购物车列表
