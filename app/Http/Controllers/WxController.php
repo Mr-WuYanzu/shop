@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Uri;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class WxController extends Controller
 {
