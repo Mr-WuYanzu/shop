@@ -43,8 +43,8 @@ class WxController extends Controller
 						    <item>
 						      <Title><![CDATA['.$v->goods_name.']]></Title>
 						      <Description><![CDATA['.$v->desc.']]></Description>
-						      <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img'.']]></PicUrl>
-						      <Url><![CDATA[url]]></Url>
+						      <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img/link.jpg'.']]></PicUrl>
+						      <Url><![CDATA['.'/weixin/detail/?goods_id='.$v->goods_id.']]></Url>
 						    </item>
 						  </Articles>
 						</xml>';
