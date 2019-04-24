@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class WxwebController extends Controller
 {
     public function hd(){
-   	  dd($_GET);
+   	  dd($_GET['redirect_uri']);
     }
 }
