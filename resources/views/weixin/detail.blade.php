@@ -32,7 +32,6 @@
 		    jsApiList: ['updateTimelineShareData'] // 必填，需要使用的JS接口列表
 		});
 		wx.ready(function(){
- 			$('#share').click(function(){
  				wx.updateTimelineShareData({
 				    title: '小哥哥来呀', // 分享标题
 				    link: 'http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='+"{{$goodsInfo->goods_id}}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -40,7 +39,6 @@
 				    success: function () {
 				    	
 					},
- 				})
 			});
  		});
 	</script>
