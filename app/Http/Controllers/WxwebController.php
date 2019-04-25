@@ -35,6 +35,5 @@ class WxwebController extends Controller
 	   	  	User::insert($data);
 	   	  	echo '欢迎:'.$userInfo['nickname'];
 	  }
-	  
     }
 }
