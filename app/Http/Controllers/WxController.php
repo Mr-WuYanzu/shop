@@ -56,6 +56,6 @@ class WxController extends Controller
     }
     //获取微信的素材
     public function fodder(){
-       
+       return view('weixin.upload');
     }
 }

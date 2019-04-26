@@ -10,6 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
+
 class UserController extends Controller
 {
     use HasResourceActions;
@@ -83,12 +84,14 @@ class UserController extends Controller
 
         $grid->uid('Uid');
         $grid->openid('Openid');
-        $grid->user_name('User name');
-        $grid->user_sex('User sex');
-        $grid->user_country('User country');
-        $grid->user_province('User province');
-        $grid->user_city('User city');
-        $grid->headimgurl('Headimgurl');
+        $grid->user_name('用户名');
+        $grid->user_sex('年龄');
+        $grid->user_country('国家');
+        $grid->user_province('市');
+        $grid->user_city('城市');
+        $grid->headimgurl('用户头像')->display(function($headimgurl){
+            return "<img src='$headimgurl' style='width:50;height:50'>";
+        });
 
         return $grid;
     }

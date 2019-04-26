@@ -14,4 +14,10 @@ Route::group([
     Route::resource('goods',GoodsController::class);
     Route::resource('user',UserController::class);
     Route::resource('order',OrderController::class);
+    Route::get('message','MessageController@index');
+    Route::get('messageAdd','MessageController@add');
+    //素材添加页面
+    Route::get('fodder','FodderController@index');
+    //素材添加执行
+    ROute::post('fodderAdd','FodderController@fodderAdd');
 });
