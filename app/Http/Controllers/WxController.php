@@ -11,12 +11,13 @@ use DB;
 
 class WxController extends Controller
 {
-    //微信第一次调用接口
+    //微信第一次调用接口 
     public function valid(){
     	echo $_GET['echostr'];
     }
     //接受微信推送消息
     public function event(){
+
     	// $client=new Client();
         $data = file_get_contents("php://input");
         $time=date('Y-m-d H:i:s');
@@ -49,6 +50,12 @@ class WxController extends Controller
 						  </Articles>
 						</xml>';
         	}
+        }else if($type=='image'){
+            $media_id=$obj->MediaId;
         }
+    }
+    //获取微信的素材
+    public function fodder(){
+       
     }
 }

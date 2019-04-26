@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\model\User;
+use App\model\Order;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class UserController extends Controller
+class OrderController extends Controller
 {
     use HasResourceActions;
 
@@ -79,16 +79,17 @@ class UserController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new User);
+        $grid = new Grid(new Order);
 
+        $grid->oid('Oid');
         $grid->uid('Uid');
-        $grid->openid('Openid');
-        $grid->user_name('User name');
-        $grid->user_sex('User sex');
-        $grid->user_country('User country');
-        $grid->user_province('User province');
-        $grid->user_city('User city');
-        $grid->headimgurl('Headimgurl');
+        $grid->order_sn('Order sn');
+        $grid->order_amount('Order amount');
+        $grid->add_time('Add time');
+        $grid->pay_time('Pay time');
+        $grid->pay_amount('Pay amount');
+        $grid->is_del('Is del');
+        $grid->pay_status('Pay status');
 
         return $grid;
     }
@@ -101,16 +102,17 @@ class UserController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(User::findOrFail($id));
+        $show = new Show(Order::findOrFail($id));
 
+        $show->oid('Oid');
         $show->uid('Uid');
-        $show->openid('Openid');
-        $show->user_name('User name');
-        $show->user_sex('User sex');
-        $show->user_country('User country');
-        $show->user_province('User province');
-        $show->user_city('User city');
-        $show->headimgurl('Headimgurl');
+        $show->order_sn('Order sn');
+        $show->order_amount('Order amount');
+        $show->add_time('Add time');
+        $show->pay_time('Pay time');
+        $show->pay_amount('Pay amount');
+        $show->is_del('Is del');
+        $show->pay_status('Pay status');
 
         return $show;
     }
@@ -122,16 +124,17 @@ class UserController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new User);
+        $form = new Form(new Order);
 
+        $form->number('oid', 'Oid');
         $form->number('uid', 'Uid');
-        $form->text('openid', 'Openid');
-        $form->text('user_name', 'User name');
-        $form->text('user_sex', 'User sex');
-        $form->text('user_country', 'User country');
-        $form->text('user_province', 'User province');
-        $form->text('user_city', 'User city');
-        $form->text('headimgurl', '<img src="headimgurl">');
+        $form->text('order_sn', 'Order sn');
+        $form->decimal('order_amount', 'Order amount');
+        $form->number('add_time', 'Add time');
+        $form->number('pay_time', 'Pay time');
+        $form->decimal('pay_amount', 'Pay amount');
+        $form->text('is_del', 'Is del');
+        $form->text('pay_status', 'Pay status');
 
         return $form;
     }

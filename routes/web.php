@@ -56,6 +56,8 @@ Route::get('weixin/upload',"weixin\JsSdkController@upload");
 Route::get('weixin/delorder','crontab\CrontabController@delOrder');
 //网页授权回调地址
 Route::get('wxweb/hd',"WxwebController@hd");
+//获取素材列表
+Route::get('wx/fodder',"WxController@fodder");
 
 
 

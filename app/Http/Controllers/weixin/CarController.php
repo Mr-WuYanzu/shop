@@ -17,6 +17,7 @@ class CarController extends Controller
 {
 	//主页
 	public function index(){
+                // echo getAccessToken();die;
         $key_click='click:view';
         $goods_id=Redis::zRevRange($key_click,0,1000000);
         $data=[];
