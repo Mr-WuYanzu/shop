@@ -58,6 +58,8 @@ Route::get('weixin/delorder','crontab\CrontabController@delOrder');
 Route::get('wxweb/hd',"WxwebController@hd");
 //获取带参数的二维码
 Route::get('weixin/activ',"ActivityController@index");
+//最新活动页面
+Route::get('weixin/view',"ActivityController@view");
 
 
 

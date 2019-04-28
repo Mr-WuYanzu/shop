@@ -29,4 +29,7 @@ class ActivityController extends Controller
         $ul='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
         return redirect($ul);
     }
+    public function view(){
+        return view('weixin.activity');
+    }
 }

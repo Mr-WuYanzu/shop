@@ -52,6 +52,24 @@ class WxController extends Controller
         	}
         }else if($type=='image'){
             $media_id=$obj->MediaId;
+        }else if(isset($obj->EventKey)){
+            if($obj->EventKey==666){
+                echo '<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[news]]></MsgType>
+                      <ArticleCount>1</ArticleCount>
+                      <Articles>
+                        <item>
+                          <Title><![CDATA[最新活动]]></Title>
+                          <Description><![CDATA[description1]]></Description>
+                          <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img/link(1).jpg'.']]></PicUrl>
+                          <Url><![CDATA['.'http://1809zhanghaibo.comcto.com/weixin/view'.']]></Url>
+                        </item>
+                      </Articles>
+                    </xml>';
+            }
         }
     }
     //获取微信的素材
