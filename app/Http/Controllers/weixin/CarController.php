@@ -200,7 +200,7 @@ class CarController extends Controller
         }
 
 
-        $url_code='http://1809a.weixin.shop.com/weixin/detail?goods_id='.$goods_id;
+        $url_code='http://1809zhanghaibo.comcto.com/weixin/detail?goods_id='.$goods_id;
         return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data,'sdk_config'=>$sdk_config,'url_code'=>$url_code]);
     }
     //商品浏览历史页面
