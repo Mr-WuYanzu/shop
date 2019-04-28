@@ -19,6 +19,10 @@
 
 		</ul>---------------------------------------------------------------------------
 	</div>
+	<div style="float:left;padding-left:30px" width="60" height="60">
+	<div id="qrcode"></div>
+	</div>
+	<script type="text/javascript" src="/js/weixin/qrcodes.js"></script>
 	<script type="text/javascript" src="/js/weixin/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 	<script type="text/javascript">
@@ -69,6 +73,10 @@
 		// 		}
 		// 		});
 		});
+	</script>
+	{{--生成二维码--}}
+	<script type="text/javascript">
+		new QRCode(document.getElementById('qrcode'), "{{$url_code}}");
 	</script>
 </body>
 </html>

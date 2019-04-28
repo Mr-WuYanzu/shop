@@ -12,6 +12,7 @@ use App\model\Order_tail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use GuzzleHttp\Client;
 
 class CarController extends Controller
 {
@@ -189,15 +190,34 @@ class CarController extends Controller
         //浏览历史
         $key_history='history:view:'.Auth::id();    //浏览历史
         Redis::zAdd($key_history,time(),$goods_id); //存入有序合集
-        $goods_id=Redis::zRevRange($key_history,0,10000000000,true);    //倒序
+        $goods_i=Redis::zRevRange($key_history,0,10000000000,true);    //倒序
         $data=[];
-        foreach($goods_id as $k=>$v){
+        foreach($goods_i as $k=>$v){
             $where=[
                 'goods_id'=>$k
             ];
             $data[]=DB::table('p_wx_goods')->where($where)->first();
         }
-        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data,'sdk_config'=>$sdk_config]);
+
+        //本页二维码
+        $client=new Client();
+        $url='https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.getAccessToken();
+        $arr=[
+            'expire_seconds'=>604800,
+            'action_name'=>'QR_SCENE',
+            'action_info'=>[
+                'scene'=>[
+                    'scene_id'=>'3'.$goods_id
+                ]
+            ]
+        ];
+        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $response=$client->request('POST',$url,[
+            'body'=>$str
+        ]);
+        $res=json_decode($response->getBody(),true);
+        $url_code=$res['url'];
+        return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data,'sdk_config'=>$sdk_config,'url_code'=>$url_code]);
     }
     //商品浏览历史页面
     public function history(){

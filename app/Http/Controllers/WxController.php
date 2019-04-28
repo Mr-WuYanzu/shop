@@ -57,6 +57,13 @@ class WxController extends Controller
             $media_id=$obj->MediaId;
         }else if($type='event'){
             $event=$obj->Event;
+            $EventKey=$obj->EventKey;
+            $goods_id=substr($EventKey,0,1);
+
+            if($goods_id==3){
+                $goods_id=substr($EventKey,1);
+                return redirect('http://1809zhanghaibo.comcto.com/weixin/detail?goods_id='.$goods_id);
+            }else{
                 switch($event){
                     case 'SCAN':
                         if(isset($obj->EventKey)){
@@ -71,6 +78,8 @@ class WxController extends Controller
                 }
 
                 echo $response_xml;
+            }
+
         }
     }
     //扫带参数二维码
@@ -78,6 +87,7 @@ class WxController extends Controller
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
         $EventKey=$obj->EventKey;
+
         //验证用户是否存在
         $res=TmpUserModel::where(['openid'=>$openid,'event_key'=>$EventKey])->first();
         if($res){
