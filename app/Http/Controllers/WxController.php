@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use App\model\TmpUserModel;
+use App\model\User;
 
 class WxController extends Controller
 {
@@ -29,6 +30,7 @@ class WxController extends Controller
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
         $type=$obj->MsgType;
+
         if($type=='text'){
         	// echo "ss";
         	// echo $obj->Content;
@@ -53,9 +55,40 @@ class WxController extends Controller
         	}
         }else if($type=='image'){
             $media_id=$obj->MediaId;
-        }else if(isset($obj->EventKey)){
-            if($obj->EventKey==666){
-                echo '<xml>
+        }else if($type='event'){
+            $event=$obj->Event;
+                switch($event){
+                    case 'SCAN':
+                        if(isset($obj->EventKey)){
+                            $this->qrcode($obj);//扫带参数二维码
+                        }
+                        break;
+                    case 'subscribe':
+                        $this->subscribe();//扫码关注
+                        break;
+                    default:
+                        $response_xml = 'success';
+                }
+
+                echo $response_xml;
+        }
+    }
+    //扫带参数二维码
+    public function qrcode($obj){
+        $wx_id=$obj->ToUserName;
+        $openid=$obj->FromUserName;
+        //验证用户是否存在
+        $res=TmpUserModel::where(['openid'=>$openid])->first();
+        if($res){
+            $response_xml= '<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[text]]></MsgType>
+                      <Content><![CDATA[嗨！]]></Content>
+                   </xml>';
+        }else{
+            $response_xml= '<xml>
                       <ToUserName><![CDATA['.$openid.']]></ToUserName>
                       <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
                       <CreateTime>'.time().'</CreateTime>
@@ -70,15 +103,20 @@ class WxController extends Controller
                         </item>
                       </Articles>
                     </xml>';
-                $data=[
-                    'openid'=>$openid,
-                    'event_key'=>$obj->EventKey,
-                    'create_time'=>$obj->CreateTime
-                ];
-                TmpUserModel::insert($data);
-            }
+            $data=[
+                'openid'=>$openid,
+                'event_key'=>$obj->EventKey,
+                'create_time'=>$obj->CreateTime
+            ];
+            TmpUserModel::insert($data);
         }
+        die($response_xml);
+
     }
+
+
+
+
     //获取微信的素材
     public function fodder(){
        return view('weixin.upload');
