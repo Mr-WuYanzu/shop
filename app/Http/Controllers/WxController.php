@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use App\model\TmpUserModel;
 
 class WxController extends Controller
 {
@@ -69,6 +70,12 @@ class WxController extends Controller
                         </item>
                       </Articles>
                     </xml>';
+                $data=[
+                    'openid'=>$openid,
+                    'event_key'=>$obj->EventKey,
+                    'create_time'=>$obj->CreateTime
+                ];
+                TmpUserModel::insert($data);
             }
         }
     }
