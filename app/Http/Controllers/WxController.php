@@ -59,11 +59,6 @@ class WxController extends Controller
             $event=$obj->Event;
             $EventKey=$obj->EventKey;
             $goods_id=substr($EventKey,0,1);
-
-            if($goods_id==3){
-                $goods_id=substr($EventKey,1);
-                return redirect('http://1809zhanghaibo.comcto.com/weixin/detail?goods_id='.$goods_id);
-            }else{
                 switch($event){
                     case 'SCAN':
                         if(isset($obj->EventKey)){
@@ -78,7 +73,7 @@ class WxController extends Controller
                 }
 
                 echo $response_xml;
-            }
+
 
         }
     }

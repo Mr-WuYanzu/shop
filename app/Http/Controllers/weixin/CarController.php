@@ -199,24 +199,8 @@ class CarController extends Controller
             $data[]=DB::table('p_wx_goods')->where($where)->first();
         }
 
-        //本页二维码
-        $client=new Client();
-        $url='https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.getAccessToken();
-        $arr=[
-            'expire_seconds'=>604800,
-            'action_name'=>'QR_SCENE',
-            'action_info'=>[
-                'scene'=>[
-                    'scene_id'=>'3'.$goods_id
-                ]
-            ]
-        ];
-        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
-        $response=$client->request('POST',$url,[
-            'body'=>$str
-        ]);
-        $res=json_decode($response->getBody(),true);
-        $url_code=$res['url'];
+
+        $url_code='http://1809a.weixin.shop.com/weixin/detail?goods_id='.$goods_id;
         return view('weixin.detail',['goodsInfo'=>$goodsInfo,'history_num'=>$history_num,'data'=>$data,'sdk_config'=>$sdk_config,'url_code'=>$url_code]);
     }
     //商品浏览历史页面
