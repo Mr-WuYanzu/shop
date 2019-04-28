@@ -25,7 +25,6 @@ class ActivityController extends Controller
         ]);
         $res=json_decode($response->getBody(),true);
         $ticket=urlencode($res['ticket']);
-
         $ul='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$ticket;
         return redirect($ul);
     }

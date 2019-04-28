@@ -9,5 +9,10 @@
 </head>
 <body>
     欢迎
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="/js/weixin/jquery-3.2.1.min.js"></script>
+    <script>
+
+    </script>
 </body>
 </html>

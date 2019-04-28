@@ -64,7 +64,7 @@ class WxController extends Controller
                         <item>
                           <Title><![CDATA[最新活动]]></Title>
                           <Description><![CDATA[description1]]></Description>
-                          <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img/link(1).jpg'.']]></PicUrl>
+                          <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img/link (1).jpg'.']]></PicUrl>
                           <Url><![CDATA['.'http://1809zhanghaibo.comcto.com/weixin/view'.']]></Url>
                         </item>
                       </Articles>
