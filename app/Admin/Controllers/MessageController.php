@@ -20,6 +20,7 @@ class MessageController extends Controller
             ->body(view('admin.weixin.message',['data'=>$data]));
     }
     public function Add(){
+
         $client=new Client();
         $openid=$_GET['openid'];
         $text=$_GET['text'];
@@ -37,6 +38,7 @@ class MessageController extends Controller
         $response=$client->request('POST',$url,[
             'body'=>$str
         ]);
+        $res=$client->getBody();
 
     }
 }

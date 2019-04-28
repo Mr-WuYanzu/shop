@@ -56,7 +56,8 @@ Route::get('weixin/upload',"weixin\JsSdkController@upload");
 Route::get('weixin/delorder','crontab\CrontabController@delOrder');
 //网页授权回调地址
 Route::get('wxweb/hd',"WxwebController@hd");
-
+//获取带参数的二维码
+Route::get('weixin/activ',"ActivityController@index");
 
 
 

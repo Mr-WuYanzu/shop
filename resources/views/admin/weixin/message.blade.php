@@ -16,7 +16,7 @@
         <td openid="{{$v->openid}}"><input type="checkbox" class="d"></td>
         <td width="50" align="center"> {{$v->uid}}</td>
         <td width="250" align="center">{{$v->openid}}</td>
-    </tr>2
+    </tr>
     @endforeach
 </table>
     <p>请选择要发送的内容:<input type="text" id="text"></p>

@@ -20,6 +20,7 @@ class FodderController extends Controller
    }
    public function fodderAdd(Request $request){
        $img_name = $this->upload($request,'img');
+//       dd($img_name);
        if($img_name){
            $url = 'https://api.weixin.qq.com/cgi-bin/media/upload?access_token='.getAccessToken().'&type=image';
            $client = new Client();
@@ -35,7 +36,7 @@ class FodderController extends Controller
            $json =  json_decode($response->getBody(),true);
 //            dd($json);
            if(isset($json['media_id'])){
-               DB::table('p_wx_fodder')->insert(['media_id'=>$json['media_id']]);
+               DB::table('p_wx_fodder')->insert(['media_id'=>$json['media_id'],'img'=>$img_name]);
            }
        }
    }

@@ -14,6 +14,7 @@ Route::group([
     Route::resource('goods',GoodsController::class);
     Route::resource('user',UserController::class);
     Route::resource('order',OrderController::class);
+    Route::resource('Manage',ManageController::class);//素材管理
     Route::get('message','MessageController@index');
     Route::get('messageAdd','MessageController@add');
     //素材添加页面

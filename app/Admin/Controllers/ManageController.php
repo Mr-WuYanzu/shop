@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\model\User;
+use App\model\Fodder;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,8 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-
-class UserController extends Controller
+class ManageController extends Controller
 {
     use HasResourceActions;
 
@@ -80,17 +79,12 @@ class UserController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new User);
+        $grid = new Grid(new Fodder);
 
-        $grid->uid('Uid');
-        $grid->openid('Openid');
-        $grid->user_name('用户名');
-        $grid->user_sex('年龄');
-        $grid->user_country('国家');
-        $grid->user_province('市');
-        $grid->user_city('城市');
-        $grid->headimgurl('用户头像')->display(function($headimgurl){
-            return "<img src='$headimgurl' width='50' height='50'>";
+        $grid->id('Id');
+        $grid->media_id('Media id');
+        $grid->img('Img')->display(function($img){
+            return "<img src='../storage/app/$img'>";
         });
 
         return $grid;
@@ -104,16 +98,11 @@ class UserController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(User::findOrFail($id));
+        $show = new Show(Fodder::findOrFail($id));
 
-        $show->uid('Uid');
-        $show->openid('Openid');
-        $show->user_name('User name');
-        $show->user_sex('User sex');
-        $show->user_country('User country');
-        $show->user_province('User province');
-        $show->user_city('User city');
-        $show->headimgurl('Headimgurl');
+        $show->id('Id');
+        $show->media_id('Media id');
+        $show->img('Img');
 
         return $show;
     }
@@ -125,16 +114,10 @@ class UserController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new User);
+        $form = new Form(new Fodder);
 
-        $form->number('uid', 'Uid');
-        $form->text('openid', 'Openid');
-        $form->text('user_name', 'User name');
-        $form->text('user_sex', 'User sex');
-        $form->text('user_country', 'User country');
-        $form->text('user_province', 'User province');
-        $form->text('user_city', 'User city');
-        $form->text('headimgurl', '<img src="headimgurl">');
+        $form->text('media_id', 'Media id');
+        $form->image('img', 'Img');
 
         return $form;
     }
