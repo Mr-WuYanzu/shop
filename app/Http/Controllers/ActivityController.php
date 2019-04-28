@@ -29,6 +29,27 @@ class ActivityController extends Controller
         return redirect($ul);
     }
     public function view(){
-        return view('weixin.activity');
+        $token=getAccessToken();
+        $appid=env('APPID');
+        //计算签名
+        $noncestr=Str::random(12);
+        $jsapi_ticket=createticket($token);
+        $timestamp=time();
+        // dd($_SERVER);
+        //当前网页的url
+        $url=$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] .$_SERVER['REQUEST_URI'];
+        // echo $url;die;
+        $str="jsapi_ticket=$jsapi_ticket&noncestr=$noncestr&timestamp=$timestamp&url=$url";
+        $sign=sha1($str);
+        $sdk_config=[
+            'appId'=> $appid,
+            'timestamp'=> $timestamp,
+            'nonceStr'=> $noncestr,
+            'signature'=> $sign,
+        ];
+        $data=[
+            'sdk_config'=>$sdk_config
+        ];
+        return view('weixin.activity',$data);
     }
 }
