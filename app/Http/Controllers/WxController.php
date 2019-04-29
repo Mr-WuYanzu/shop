@@ -221,6 +221,33 @@ class WxController extends Controller
         }
         return $sedata;
     }
+//创建微信菜单
+    public function create_menu(){
+
+        $redirect_url=urlencode('http://1809zhanghaibo.comcto.com/web/hd');
+        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+        $arr=[
+            'button'=>[
+                [
+                    'type'=>'view',
+                    'name'=>'最新福利',
+                    'url'=>$url
+                ]
+            ]
+        ];
+        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $client=new Client();
+        $response=$client->request('POST',' https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken(),[
+            'body'=>$str
+        ]);
+        $res=$response->getBody();
+        echo $res;
+    }
+//网页授权回调
+    public function hd(){
+
+    }
+
 
     //获取微信的素材
     public function fodder(){

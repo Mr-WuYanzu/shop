@@ -60,6 +60,10 @@ Route::get('wxweb/hd',"WxwebController@hd");
 Route::get('weixin/activ',"ActivityController@index");
 //最新活动页面
 Route::get('weixin/view',"ActivityController@view");
+//创建微信菜单
+Route::get('weixin/menu','WxController@create_menu');
+//最新福利授权回调
+Route::get('web/hd','WxController@hd');
 
 
 
