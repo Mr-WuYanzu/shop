@@ -211,10 +211,10 @@ class WxController extends Controller
                       <ArticleCount>1</ArticleCount>
                       <Articles>
                         <item>
-                          <Title><![CDATA['.$data[$num]->goods_name.']]></Title>
-                          <Description><![CDATA['.$data[$num]->desc.']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data[$num]->goods_img.']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]->goods_id.']]></Url>
+                          <Title><![CDATA['.$data[$num]['goods_name'].']]></Title>
+                          <Description><![CDATA['.$data[$num]['desc'].']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data[$num]['goods_img'].']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]['goods_id'].']]></Url>
                         </item>
                       </Articles>
                     </xml>';
