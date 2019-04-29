@@ -11,6 +11,7 @@ use DB;
 use App\model\TmpUserModel;
 use App\model\User;
 use App\model\Goods;
+use App\model\Signin;
 
 class WxController extends Controller
 {
@@ -225,6 +226,9 @@ class WxController extends Controller
     public function create_menu(){
         $redirect_url=urlencode('http://1809zhanghaibo.comcto.com/web/hd');
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+        $redirect_ul=urlencode('http://1809zhanghaibo.comcto.com/weixin/');
+        $ul='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_ul.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+
         $arr=[
             'button'=>[
                 [
@@ -241,7 +245,12 @@ class WxController extends Controller
                             'key'=>'WZ_SH_00'
                         ]
                     ]
-                ]
+                ],
+                [
+                    'type'=>'view',
+                    'name'=>'签到',
+                    'url'=>$ul
+                ],
             ]
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
@@ -269,7 +278,24 @@ class WxController extends Controller
             header('Refresh:3;url=http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=10');
         }
     }
+//用户签到
+    public function signIn(){
+        $code=$_GET['code'];
+        $url='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
+        $arr=json_decode(file_get_contents($url),true);
+        $openid=$arr['openid'];
+        //获取用户信息
+        $userInfo=json_decode(file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$openid.'&lang=zh_CN'),true);
+        $res=Signin::where(['openid'=>$openid])->first();
+        if($res){
+            echo "签到成功";
+        }else{
 
+            Signin::insert(['openid'=>$openid]);
+        }
+
+
+    }
 
     //获取微信的素材
     public function fodder(){

@@ -64,6 +64,8 @@ Route::get('weixin/view',"ActivityController@view");
 Route::get('weixin/menu','WxController@create_menu');
 //最新福利授权回调
 Route::get('web/hd','WxController@hd');
+//微信签到
+Route::get('weixin/signIn','WxController@signIn');
 
 
 
