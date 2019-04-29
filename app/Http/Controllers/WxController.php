@@ -283,6 +283,8 @@ class WxController extends Controller
                 ],
             ]
         ];
+
+        
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
         $client=new Client();
         $ul='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken();
