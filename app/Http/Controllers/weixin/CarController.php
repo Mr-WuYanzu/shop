@@ -29,12 +29,12 @@ class CarController extends Controller
             $data[]=DB::table('p_wx_goods')->where($where)->first();
         }
         $res=DB::table('p_wx_goods')->where(['status'=>0])->whereNotIn('goods_id',$goods_id)->get();
+
         if($res){
             foreach($res as $k=>$v){
                 $data[]=$res[$k];
             }
         }
-        
 		return view('weixin.index',['data'=>$data]);
 	}
 	//添加购物车
@@ -187,6 +187,7 @@ class CarController extends Controller
         //点击量
         $key_click='click:view';
         Redis::zAdd($key_click,$history_num,$goods_id);
+
         //浏览历史
         $key_history='history:view:'.Auth::id();    //浏览历史
         Redis::zAdd($key_history,time(),$goods_id); //存入有序合集

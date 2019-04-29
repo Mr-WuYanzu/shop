@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use DB;
 use App\model\TmpUserModel;
 use App\model\User;
+use App\model\Goods;
 
 class WxController extends Controller
 {
@@ -52,7 +53,10 @@ class WxController extends Controller
 						    </item>
 						  </Articles>
 						</xml>';
-        	}
+        	}else{
+        	    $sedata=$this->seach($obj);
+        	    echo $sedata;
+            }
         }else if($type=='image'){
             $media_id=$obj->MediaId;
         }else if($type='event'){
@@ -170,7 +174,53 @@ class WxController extends Controller
         $arr=json_decode($data,true);
         return $arr;
     }
+//用户搜索商品
+    public function seach($obj){
+        $where=[
+            'goods_name'=>$obj->Content
+        ];
+        $wx_id=$obj->ToUserName;
+        $openid=$obj->FromUserName;
 
+        $data=Goods::where($where)->first();
+        if($data){
+//                    返回给用户图文消息
+            $sedata='<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[news]]></MsgType>
+                      <ArticleCount>1</ArticleCount>
+                      <Articles>
+                        <item>
+                          <Title><![CDATA['.$data->goods_name.']]></Title>
+                          <Description><![CDATA['.$data->desc.']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data->goods_img.']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data->goods_id.']]></Url>
+                        </item>
+                      </Articles>
+                    </xml>';
+        }else{
+            $data=Goods::get()->toArray();
+            $num=array_rand($data,1);
+            $sedata='<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[news]]></MsgType>
+                      <ArticleCount>1</ArticleCount>
+                      <Articles>
+                        <item>
+                          <Title><![CDATA['.$data[$num]->goods_name.']]></Title>
+                          <Description><![CDATA['.$data[$num]->desc.']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data[$num]->goods_img.']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]->goods_id.']]></Url>
+                        </item>
+                      </Articles>
+                    </xml>';
+        }
+        return $sedata;
+    }
 
     //获取微信的素材
     public function fodder(){

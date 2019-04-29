@@ -4,7 +4,6 @@
 	<title>主页</title>
 </head>
 <body>
-	<button><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe5ff29e2590e9cef&redirect_uri=http%3A%2F%2F1809zhanghaibo.comcto.com%2Fwxweb%2Fhd&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">网页授权</a></button>
 	<div style="padding-left:500px;padding-top:300px">
 		<ul>
 			@foreach($data as $k=>$v)
