@@ -7,7 +7,7 @@
 	<div style="float:left">
 		<h1>商品详情</h1>
 		<p>商品名称:{{$goodsInfo->goods_name}}</p>
-        <p> 商品图片<img src="/img/{{$goodsInfo->goods_img}}" width="160"> </p>
+        <p> 商品图片<img src="/{{$goodsInfo->goods_img}}" width="160"> </p>
 		<p>商品价格:{{$goodsInfo->goods_price}}</p>
 		<p>浏览次数：{{$history_num}}</p>
 	</div>
@@ -81,6 +81,9 @@
 	{{--生成二维码--}}
 	<script type="text/javascript">
 		new QRCode(document.getElementById('qrcode'), "{{$url_code}}");
+		$(function(){
+            $('#qrcode').children(':last-child').prop('width','80');
+        })
 	</script>
 </body>
 </html>

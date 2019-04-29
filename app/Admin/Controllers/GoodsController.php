@@ -81,13 +81,14 @@ class GoodsController extends Controller
     {
         $grid = new Grid(new Goods);
 
-        $grid->goods_id('Goods id');
-        $grid->goods_name('Goods name');
-        $grid->goods_price('Goods price');
-        $grid->goods_num('Goods num');
-        $grid->status('Status');
-        $grid->add_time('Add time');
-        $grid->desc('Desc');
+        $grid->goods_id('商品id');
+        $grid->goods_name('商品名称');
+        $grid->goods_price('商品价格');
+        $grid->goods_num('库存');
+        $grid->status('状态');
+        $grid->add_time('添加时间');
+        $grid->desc('商品描述');
+        $grid->goods_img('商品图片')->image();
 
         return $grid;
     }
@@ -122,13 +123,13 @@ class GoodsController extends Controller
     {
         $form = new Form(new Goods);
 
-        $form->number('goods_id', 'Goods id');
-        $form->text('goods_name', 'Goods name');
-        $form->number('goods_price', 'Goods price');
-        $form->number('goods_num', 'Goods num');
-        $form->text('status', 'Status');
-        $form->number('add_time', 'Add time');
-        $form->textarea('desc', 'Desc');
+        $form->number('goods_id', '商品id');
+        $form->text('goods_name', '商品名称');
+        $form->number('goods_price', '商品价格');
+        $form->number('goods_num', '商品库存');
+        $form->text('status', '状态');
+        $form->textarea('desc', '商品描述');
+        $form->image('goods_img','商品图片');
 
         return $form;
     }

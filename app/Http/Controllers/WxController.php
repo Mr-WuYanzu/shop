@@ -195,7 +195,7 @@ class WxController extends Controller
                         <item>
                           <Title><![CDATA['.$data->goods_name.']]></Title>
                           <Description><![CDATA['.$data->desc.']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data->goods_img.']]></PicUrl>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data->goods_img.']]></PicUrl>
                           <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data->goods_id.']]></Url>
                         </item>
                       </Articles>
@@ -213,7 +213,7 @@ class WxController extends Controller
                         <item>
                           <Title><![CDATA['.$data[$num]['goods_name'].']]></Title>
                           <Description><![CDATA['.$data[$num]['desc'].']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/img/'.$data[$num]['goods_img'].']]></PicUrl>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data[$num]['goods_img'].']]></PicUrl>
                           <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]['goods_id'].']]></Url>
                         </item>
                       </Articles>
