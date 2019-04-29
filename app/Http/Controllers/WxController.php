@@ -254,7 +254,7 @@ class WxController extends Controller
         //获取用户信息
         $userInfo=json_decode(file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN'),true);
         echo "欢迎：".$userInfo['nickname'];
-        head('Refresh:3;url=http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=10');
+        header('Refresh:3;url=http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=10');
     }
 
 
