@@ -170,7 +170,7 @@ class WxController extends Controller
     }
 //查询用户资料
     public function WxUserTail($openid){
-        $data=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$this->access_token()."&openid=".$openid."&lang=zh_CN");
+        $data=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=".getAccessToken()."&openid=".$openid."&lang=zh_CN");
         $arr=json_decode($data,true);
         return $arr;
     }
@@ -248,9 +248,12 @@ class WxController extends Controller
 //网页授权回调
     public function hd(){
         $code=$_GET['code'];
-        echo $code;die;
-        $url=' https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
-        dd(file_get_contents($url));
+//        echo $code;die;
+        $url='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
+        $arr=json_decode(file_get_contents($url),true);
+        //获取用户信息
+        $userInfo=json_decode(file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='.getAccessToken().'&openid='.$arr['openid'].'&lang=zh_CN'));
+        dd($userInfo);
     }
 
 
