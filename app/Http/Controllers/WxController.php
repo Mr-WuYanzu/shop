@@ -223,7 +223,6 @@ class WxController extends Controller
     }
 //创建微信菜单
     public function create_menu(){
-
         $redirect_url=urlencode('http://1809zhanghaibo.comcto.com/web/hd');
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
         $arr=[
@@ -232,12 +231,23 @@ class WxController extends Controller
                     'type'=>'view',
                     'name'=>'最新福利',
                     'url'=>$url
+                ],
+                [
+                    'name'=>'菜单',
+                    'sub_button'=>[
+                        [
+                            'name'=>'发送位置',
+                            'type'=>'location_select',
+                            'key'=>'WZ_SH_00'
+                        ]
+                    ]
                 ]
             ]
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
         $client=new Client();
-        $response=$client->request('POST','https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken(),[
+        $ul='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken();
+        $response=$client->request('POST',$ul,[
             'body'=>$str
         ]);
         $res=json_decode($response->getBody(),true);
@@ -248,7 +258,6 @@ class WxController extends Controller
 //网页授权回调
     public function hd(){
         $code=$_GET['code'];
-//        echo $code;die;
         $url='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
         $arr=json_decode(file_get_contents($url),true);
         //获取用户信息
