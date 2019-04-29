@@ -227,7 +227,7 @@ class WxController extends Controller
     public function create_menu(){
         $redirect_url=urlencode('http://1809zhanghaibo.comcto.com/web/hd');
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-        $redirect_ul=urlencode('http://1809zhanghaibo.comcto.com/weixin/');
+        $redirect_ul=urlencode('http://1809zhanghaibo.comcto.com/weixin/signIn');
         $ul='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APPID').'&redirect_uri='.$redirect_ul.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
         $arr=[
@@ -297,7 +297,11 @@ class WxController extends Controller
         }
         $signin_key='signin:key:'.$userInfo['openid'];
         $num=Redis::incr($signin_key);
-
+        $time_key='time:'.$userInfo['openid'];
+        $date=date('Y-M-D H:i:s');
+        $time=Redis::zAdd($time_key,time(),$date);
+        $date_time=Redis::zRevRange($time_key,0,10000000000);
+        dd($date_time);
 
         return view('weixin.signin',['num'=>$num]);
 

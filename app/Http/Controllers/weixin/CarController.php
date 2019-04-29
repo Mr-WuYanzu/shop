@@ -29,6 +29,7 @@ class CarController extends Controller
             $data[]=DB::table('p_wx_goods')->where($where)->first();
         }
         $res=DB::table('p_wx_goods')->where(['status'=>0])->whereNotIn('goods_id',$goods_id)->get();
+
         if($res){
             foreach($res as $k=>$v){
                 $data[]=$res[$k];

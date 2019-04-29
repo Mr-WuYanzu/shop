@@ -9,5 +9,6 @@
 </head>
 <body>
     <p>签到次数：{{$num}}</p>
+    <p>签到历史：{{$time}}签到一次</p>
 </body>
 </html>
