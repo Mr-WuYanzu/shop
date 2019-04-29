@@ -12,6 +12,7 @@ use App\model\TmpUserModel;
 use App\model\User;
 use App\model\Goods;
 use App\model\Signin;
+use Illuminate\Support\Facades\Redis;
 
 class WxController extends Controller
 {
@@ -292,7 +293,13 @@ class WxController extends Controller
         }else{
 
             Signin::insert(['openid'=>$openid]);
+            echo "欢迎:".$userInfo['nickname'].'首次签到';
         }
+        $signin_key='signin:key:'.$userInfo['openid'];
+        $num=Redis::incr($signin_key);
+
+
+        return view('weixin.signin',['num'=>$num]);
 
 
     }
