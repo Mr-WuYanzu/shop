@@ -298,12 +298,11 @@ class WxController extends Controller
         $signin_key='signin:key:'.$userInfo['openid'];
         $num=Redis::incr($signin_key);
         $time_key='time:'.$userInfo['openid'];
-        $date=date('Y-M-D H:i:s');
+        $date=date('Y-m-d H:i:s');
         $time=Redis::zAdd($time_key,time(),$date);
         $date_time=Redis::zRevRange($time_key,0,10000000000);
-        dd($date_time);
 
-        return view('weixin.signin',['num'=>$num]);
+        return view('weixin.signin',['num'=>$num,'date_time'=>$date_time]);
 
 
     }

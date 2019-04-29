@@ -9,6 +9,8 @@
 </head>
 <body>
     <p>签到次数：{{$num}}</p>
-    <p>签到历史：{{$time}}签到一次</p>
+    @for($i=0;$i<=count($date_time);$i++)
+    <p>签到历史：{{$date_time[$i]}}签到一次</p>
+    @endfor
 </body>
 </html>
