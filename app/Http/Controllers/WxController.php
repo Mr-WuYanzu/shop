@@ -237,15 +237,17 @@ class WxController extends Controller
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
         $client=new Client();
-        $response=$client->request('POST',' https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken(),[
+        $response=$client->request('POST','https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getAccessToken(),[
             'body'=>$str
         ]);
-        $res=$response->getBody();
-        echo $res;
+        $res=json_decode($response->getBody(),true);
+        if($res['ERRCODE']==0){
+            echo "创建成功";
+        }
     }
 //网页授权回调
     public function hd(){
-
+        echo $_GET['code'];
     }
 
 
