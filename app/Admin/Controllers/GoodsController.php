@@ -127,7 +127,7 @@ class GoodsController extends Controller
         $form->text('goods_name', '商品名称');
         $form->number('goods_price', '商品价格');
         $form->number('goods_num', '商品库存');
-        $form->text('status', '状态');
+        $form->radio('status','是否展示')->options(['0' => '是', '1'=> '否'])->default('0');
         $form->textarea('desc', '商品描述');
         $form->image('goods_img','商品图片');
 
