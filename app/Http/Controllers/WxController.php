@@ -253,8 +253,12 @@ class WxController extends Controller
         $arr=json_decode(file_get_contents($url),true);
         //获取用户信息
         $userInfo=json_decode(file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN'),true);
-        echo "欢迎：".$userInfo['nickname'];
-        header('Refresh:3;url=http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=10');
+        if(isset($userInfo['errcode'])){
+            die('未知错误');
+        }else {
+            echo "欢迎：" . $userInfo['nickname'] . '即将跳转至福利页面';
+            header('Refresh:3;url=http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=10');
+        }
     }
 
 
