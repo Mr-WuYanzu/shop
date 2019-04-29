@@ -248,6 +248,7 @@ class WxController extends Controller
 //网页授权回调
     public function hd(){
         $code=$_GET['code'];
+        echo $code;die;
         $url=' https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
         dd(file_get_contents($url));
     }
