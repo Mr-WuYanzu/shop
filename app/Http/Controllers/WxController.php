@@ -241,13 +241,15 @@ class WxController extends Controller
             'body'=>$str
         ]);
         $res=json_decode($response->getBody(),true);
-        if($res['ERRCODE']==0){
+        if($res['errcode']==0){
             echo "创建成功";
         }
     }
 //网页授权回调
     public function hd(){
-        echo $_GET['code'];
+        $code=$_GET['code'];
+        $url=' https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('APPID').'&secret='.env('SECRET').'&code='.$code.'&grant_type=authorization_code';
+        dd(file_get_contents($url));
     }
 
 
