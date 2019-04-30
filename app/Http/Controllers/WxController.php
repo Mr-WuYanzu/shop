@@ -43,8 +43,59 @@ class WxController extends Controller
                       <MsgType><![CDATA[text]]></MsgType>
                       <Content><![CDATA[请输入商品名称]]></Content>
                     </xml>';
+            }else if(){
+
             }
+        }else if($type=='text'){
+            $this->seach($obj);
         }
+    }
+    //用户搜索商品
+    public function seach($obj){
+        $where=[
+            'goods_name'=>$obj->Content
+        ];
+        $wx_id=$obj->ToUserName;
+        $openid=$obj->FromUserName;
+
+        $data=Goods::where($where)->first();
+        if($data){
+//                    返回给用户图文消息
+            $sedata='<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[news]]></MsgType>
+                      <ArticleCount>1</ArticleCount>
+                      <Articles>
+                        <item>
+                          <Title><![CDATA['.$data->goods_name.']]></Title>
+                          <Description><![CDATA['.$data->desc.']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data->goods_img.']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data->goods_id.']]></Url>
+                        </item>
+                      </Articles>
+                    </xml>';
+        }else{
+            $data=Goods::get()->toArray();
+            $num=array_rand($data,1);
+            $sedata='<xml>
+                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                      <CreateTime>'.time().'</CreateTime>
+                      <MsgType><![CDATA[news]]></MsgType>
+                      <ArticleCount>1</ArticleCount>
+                      <Articles>
+                        <item>
+                          <Title><![CDATA['.$data[$num]['goods_name'].']]></Title>
+                          <Description><![CDATA['.$data[$num]['desc'].']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data[$num]['goods_img'].']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]['goods_id'].']]></Url>
+                        </item>
+                      </Articles>
+                    </xml>';
+        }
+        return $sedata;
     }
     //扫带参数二维码
     public function qrcode($obj){
@@ -139,53 +190,7 @@ class WxController extends Controller
         $arr=json_decode($data,true);
         return $arr;
     }
-//用户搜索商品
-    public function seach($obj){
-        $where=[
-            'goods_name'=>$obj->Content
-        ];
-        $wx_id=$obj->ToUserName;
-        $openid=$obj->FromUserName;
 
-        $data=Goods::where($where)->first();
-        if($data){
-//                    返回给用户图文消息
-            $sedata='<xml>
-                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
-                      <CreateTime>'.time().'</CreateTime>
-                      <MsgType><![CDATA[news]]></MsgType>
-                      <ArticleCount>1</ArticleCount>
-                      <Articles>
-                        <item>
-                          <Title><![CDATA['.$data->goods_name.']]></Title>
-                          <Description><![CDATA['.$data->desc.']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data->goods_img.']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data->goods_id.']]></Url>
-                        </item>
-                      </Articles>
-                    </xml>';
-        }else{
-            $data=Goods::get()->toArray();
-            $num=array_rand($data,1);
-            $sedata='<xml>
-                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
-                      <CreateTime>'.time().'</CreateTime>
-                      <MsgType><![CDATA[news]]></MsgType>
-                      <ArticleCount>1</ArticleCount>
-                      <Articles>
-                        <item>
-                          <Title><![CDATA['.$data[$num]['goods_name'].']]></Title>
-                          <Description><![CDATA['.$data[$num]['desc'].']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data[$num]['goods_img'].']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]['goods_id'].']]></Url>
-                        </item>
-                      </Articles>
-                    </xml>';
-        }
-        return $sedata;
-    }
 //创建微信菜单
     public function create_menu(){
         $redirect_url=urlencode('http://1809zhanghaibo.comcto.com/web/hd');
