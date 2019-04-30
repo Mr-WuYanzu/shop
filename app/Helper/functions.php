@@ -4,12 +4,15 @@ use Illuminate\Support\Facades\Redis;
 	function getAccessToken(){
 		$key="Access_token";
 		$token=Redis::get($key);
+
 		if($token){
 			return $token;
 		}else{
+//		    请求接口
 			$url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('APPID').'&secret='.env('SECRET');
 			$arr=json_decode(file_get_contents($url),true);
 			if(isset($arr['access_token'])){
+			    //存入缓存
 				Redis::set($key,$arr['access_token']);
 				Redis::expire($key,3600);
 				return $arr['access_token'];

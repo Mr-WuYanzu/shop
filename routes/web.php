@@ -68,6 +68,8 @@ Route::get('web/hd','WxController@hd');
 Route::get('weixin/signIn','WxController@signIn');
 //将用户搜索的商品名存储数据库
 Route::get('weixin/savegoodsname','WxController@savegoodsname');
+//设置所属行业
+Route::get('weixin/set','WxController@set');
 
 
 

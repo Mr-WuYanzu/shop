@@ -59,9 +59,7 @@ class WxController extends Controller
             }
         }else if($type=='text'){
             $sedata=$this->seach($obj);
-            $arr=json_decode($obj,true);
-            Redis::set('goods_name',$arr['Content']);
-            echo $sedata;
+
         }
     }
     //用户搜索商品
@@ -71,19 +69,14 @@ class WxController extends Controller
         ];
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
-        $key=$openid.$obj->Content;
-        $Info=Redis::get($key);
 
+        //将用户搜索商品存入redis
+        Redis::set('goods_name',$where['goods_name']);
 
-        if(!$Info) {
             $data=Goods::where($where)->first();
-        }else{
-            $data=json_decode($Info);
-        }
         if ($data) {
-
-//                    返回给用户图文消息
-            $sedata = '<xml>
+            Redis::set('goods_name',$data->goods_name);
+            echo '<xml>
                       <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
                       <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
                       <CreateTime>' . time() . '</CreateTime>
@@ -98,29 +91,11 @@ class WxController extends Controller
                         </item>
                       </Articles>
                     </xml>';
-            $Info=json_encode($data);
 
-            Redis::set($key,$Info);
-        } else {
-            $data = Goods::get()->toArray();
-            $num = array_rand($data, 1);
-            $sedata = '<xml>
-                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
-                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
-                      <CreateTime>' . time() . '</CreateTime>
-                      <MsgType><![CDATA[news]]></MsgType>
-                      <ArticleCount>1</ArticleCount>
-                      <Articles>
-                        <item>
-                          <Title><![CDATA[' . $data[$num]['goods_name'] . ']]></Title>
-                          <Description><![CDATA[' . $data[$num]['desc'] . ']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/' . $data[$num]['goods_img'] . ']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=' . $data[$num]['goods_id'] . ']]></Url>
-                        </item>
-                      </Articles>
-                    </xml>';
+            $Info=json_encode($data);
+            Redis::set('goods_name',$data->goods_name);
         }
-        return $sedata;
+
     }
     //将用户搜索的商品名存储数据库
     public function savegoodsname(){
