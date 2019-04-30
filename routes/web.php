@@ -66,6 +66,8 @@ Route::get('weixin/menu','WxController@create_menu');
 Route::get('web/hd','WxController@hd');
 //微信签到
 Route::get('weixin/signIn','WxController@signIn');
+//将用户搜索的商品名存储数据库
+Route::get('weixin/savegoodsname','WxController@savegoodsname');
 
 
 

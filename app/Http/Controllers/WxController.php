@@ -59,6 +59,7 @@ class WxController extends Controller
             }
         }else if($type=='text'){
             $sedata=$this->seach($obj);
+            Redis::set('goods_name',$obj->Content);
             echo $sedata;
         }
     }
@@ -118,6 +119,13 @@ class WxController extends Controller
                     </xml>';
         }
         return $sedata;
+    }
+    //将用户搜索的商品名存储数据库
+    public function savegoodsname(){
+        $goods_name=Redis::get('goods_name');
+        if($goods_name){
+            DB::table('k_goods')->insert(['goods_name'=>$goods_name]);
+        }
     }
     //扫带参数二维码
     public function qrcode($obj){
