@@ -69,40 +69,50 @@ class WxController extends Controller
         ];
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
+        $key=$openid.$obj->Content;
+        $Info=Redis::get($key);
 
-        $data=Goods::where($where)->first();
-        if($data){
+
+        if(!$Info) {
+            $data=Goods::where($where)->first();
+        }else{
+            $data=json_decode($Info);
+        }
+        if ($data) {
+
 //                    返回给用户图文消息
-            $sedata='<xml>
-                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
-                      <CreateTime>'.time().'</CreateTime>
+            $sedata = '<xml>
+                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
+                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
+                      <CreateTime>' . time() . '</CreateTime>
                       <MsgType><![CDATA[news]]></MsgType>
                       <ArticleCount>1</ArticleCount>
                       <Articles>
                         <item>
-                          <Title><![CDATA['.$data->goods_name.']]></Title>
-                          <Description><![CDATA['.$data->desc.']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data->goods_img.']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data->goods_id.']]></Url>
+                          <Title><![CDATA[' . $data->goods_name . ']]></Title>
+                          <Description><![CDATA[' . $data->desc . ']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/' . $data->goods_img . ']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=' . $data->goods_id . ']]></Url>
                         </item>
                       </Articles>
                     </xml>';
-        }else{
-            $data=Goods::get()->toArray();
-            $num=array_rand($data,1);
-            $sedata='<xml>
-                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
-                      <CreateTime>'.time().'</CreateTime>
+            $Info=json_encode($data);
+            Redis::set($key,$Info);
+        } else {
+            $data = Goods::get()->toArray();
+            $num = array_rand($data, 1);
+            $sedata = '<xml>
+                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
+                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
+                      <CreateTime>' . time() . '</CreateTime>
                       <MsgType><![CDATA[news]]></MsgType>
                       <ArticleCount>1</ArticleCount>
                       <Articles>
                         <item>
-                          <Title><![CDATA['.$data[$num]['goods_name'].']]></Title>
-                          <Description><![CDATA['.$data[$num]['desc'].']]></Description>
-                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/'.$data[$num]['goods_img'].']]></PicUrl>
-                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$data[$num]['goods_id'].']]></Url>
+                          <Title><![CDATA[' . $data[$num]['goods_name'] . ']]></Title>
+                          <Description><![CDATA[' . $data[$num]['desc'] . ']]></Description>
+                          <PicUrl><![CDATA[http://1809zhanghaibo.comcto.com/' . $data[$num]['goods_img'] . ']]></PicUrl>
+                          <Url><![CDATA[http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id=' . $data[$num]['goods_id'] . ']]></Url>
                         </item>
                       </Articles>
                     </xml>';
