@@ -59,7 +59,8 @@ class WxController extends Controller
             }
         }else if($type=='text'){
             $sedata=$this->seach($obj);
-            Redis::set('goods_name',$obj->Content);
+            $text=$obj->Content;
+            Redis::set('goods_name',$text);
             echo $sedata;
         }
     }
