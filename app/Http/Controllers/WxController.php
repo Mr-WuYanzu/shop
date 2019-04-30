@@ -43,8 +43,6 @@ class WxController extends Controller
                       <MsgType><![CDATA[text]]></MsgType>
                       <Content><![CDATA[请输入商品名称]]></Content>
                     </xml>';
-            }else if(){
-
             }
         }else if($type=='text'){
             $this->seach($obj);
