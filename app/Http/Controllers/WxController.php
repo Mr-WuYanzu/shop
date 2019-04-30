@@ -124,6 +124,7 @@ class WxController extends Controller
     //将用户搜索的商品名存储数据库
     public function savegoodsname(){
         $goods_name=Redis::get('goods_name');
+        echo $goods_name;
         if($goods_name){
             DB::table('k_goods')->insert(['goods_name'=>$goods_name]);
         }
