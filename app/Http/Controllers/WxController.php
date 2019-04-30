@@ -48,6 +48,7 @@ class WxController extends Controller
             }
         }else if($type=='text'){
             $this->seach($obj);
+            echo $sedata;
         }
     }
     //用户搜索商品
