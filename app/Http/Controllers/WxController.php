@@ -59,6 +59,8 @@ class WxController extends Controller
             }
         }else if($type=='text'){
             $sedata=$this->seach($obj);
+            $arr=json_decode($obj,true);
+            Redis::set('goods_name',$arr['Content']);
             echo $sedata;
         }
     }
@@ -97,7 +99,7 @@ class WxController extends Controller
                       </Articles>
                     </xml>';
             $Info=json_encode($data);
-            Redis::set('goods_name',$data->goods_name);
+
             Redis::set($key,$Info);
         } else {
             $data = Goods::get()->toArray();
