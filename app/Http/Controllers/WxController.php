@@ -33,14 +33,17 @@ class WxController extends Controller
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
         $type=$obj->MsgType;
-        if($type=='subscribe'){
-            echo '<xml>
-                      <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                      <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
-                      <CreateTime>'.time().'</CreateTime>
+        if($type=='event'){
+            $event=$obj->Event;
+            if($event=='subscribe') {
+                echo '<xml>
+                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
+                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
+                      <CreateTime>' . time() . '</CreateTime>
                       <MsgType><![CDATA[text]]></MsgType>
                       <Content><![CDATA[请输入商品名称]]></Content>
                     </xml>';
+            }
         }
     }
     //扫带参数二维码
