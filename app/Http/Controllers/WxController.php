@@ -36,16 +36,29 @@ class WxController extends Controller
         if($type=='event'){
             $event=$obj->Event;
             if($event=='subscribe') {
-                echo '<xml>
+                $res=DB::table('k_wx_user')->where('openid',$openid)->first();
+                if($res){
+                    echo '<xml>
+                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
+                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
+                      <CreateTime>' . time() . '</CreateTime>
+                      <MsgType><![CDATA[text]]></MsgType>
+                      <Content><![CDATA[欢迎回来]]></Content>
+                    </xml>';
+                }else{
+                    echo '<xml>
                       <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
                       <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
                       <CreateTime>' . time() . '</CreateTime>
                       <MsgType><![CDATA[text]]></MsgType>
                       <Content><![CDATA[请输入商品名称]]></Content>
                     </xml>';
+                    DB::table('k_wx_user')->insert(['openid'=>$openid]);
+                }
+
             }
         }else if($type=='text'){
-            $this->seach($obj);
+            $sedata=$this->seach($obj);
             echo $sedata;
         }
     }
