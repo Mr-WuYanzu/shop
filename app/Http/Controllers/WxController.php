@@ -23,7 +23,7 @@ class WxController extends Controller
     //接受微信推送消息
     public function event(){
 
-    	// $client=new Client();
+        // $client=new Client();
         $data = file_get_contents("php://input");
         $time=date('Y-m-d H:i:s');
         $str=$time.$data."\n";
@@ -33,32 +33,81 @@ class WxController extends Controller
         $wx_id=$obj->ToUserName;
         $openid=$obj->FromUserName;
         $type=$obj->MsgType;
-        if($type=='event'){
-            $event=$obj->Event;
-            if($event=='subscribe') {
-                $res=DB::table('k_wx_user')->where('openid',$openid)->first();
-                if($res){
+
+        if($type=='text'){
+            // echo "ss";
+            // echo $obj->Content;
+            if($obj->Content=="最新商品"){
+                $v=DB::table('p_wx_goods')->orderBy('add_time','desc')->first();
+                // dd($data);
                     echo '<xml>
-                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
-                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
-                      <CreateTime>' . time() . '</CreateTime>
-                      <MsgType><![CDATA[text]]></MsgType>
-                      <Content><![CDATA[欢迎回来]]></Content>
-                    </xml>';
+                          <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                          <FromUserName><![CDATA['.$wx_id.']]></FromUserName>
+                          <CreateTime>'.time().'</CreateTime>
+                          <MsgType><![CDATA[news]]></MsgType>
+                          <ArticleCount>1</ArticleCount>
+                          <Articles>
+                            <item>
+                              <Title><![CDATA['.$v->goods_name.']]></Title>
+                              <Description><![CDATA['.$v->desc.']]></Description>
+                              <PicUrl><![CDATA['.'http://1809zhanghaibo.comcto.com/img/link.jpg'.']]></PicUrl>
+                              <Url><![CDATA['.'http://1809zhanghaibo.comcto.com/weixin/detail/?goods_id='.$v->goods_id.']]></Url>
+                            </item>
+                          </Articles>
+                        </xml>';
+            }else if(strpos($obj->Content,'+天气')){
+                $city=explode('+',$obj->Content)[0];
+                $url="https://free-api.heweather.net/s6/weather/now?parameters&location=".$city."&key=HE1904161030301545";
+                $arr=json_decode(file_get_contents($url),true);
+                if($arr['HeWeather6'][0]['status']!=='ok'){
+                    echo "<xml>
+                              <ToUserName><![CDATA[".$openid."]]></ToUserName>
+                              <FromUserName><![CDATA[".$wx_id."]]></FromUserName>
+                              <CreateTime>".time()."</CreateTime>
+                              <MsgType><![CDATA[text]]></MsgType>
+                              <Content><![CDATA[城市信息有误]]></Content>
+                          </xml>";
                 }else{
-                    echo '<xml>
-                      <ToUserName><![CDATA[' . $openid . ']]></ToUserName>
-                      <FromUserName><![CDATA[' . $wx_id . ']]></FromUserName>
-                      <CreateTime>' . time() . '</CreateTime>
-                      <MsgType><![CDATA[text]]></MsgType>
-                      <Content><![CDATA[请输入商品名称]]></Content>
-                    </xml>';
-                    DB::table('k_wx_user')->insert(['openid'=>$openid]);
+                    $city=$arr['HeWeather6'][0]['basic']['parent_city'];
+                    $cond_txt=$arr['HeWeather6'][0]['now']['cond_txt'];
+                    $fl=$arr['HeWeather6'][0]['now']['fl'];
+                    $tmp=$arr['HeWeather6'][0]['now']['tmp'];
+                    $wind_dir=$arr['HeWeather6'][0]['now']['wind_dir'];
+                    $wind_sc=$arr['HeWeather6'][0]['now']['wind_sc'];
+                    $wind_spd=$arr['HeWeather6'][0]['now']['wind_spd'];
+                    $str="城市:".$city."\n"."天气状况:".$cond_txt."\n"."体感温度:".$fl."\n"."温度:".$tmp."\n"."风向:".$wind_dir."\n"."风力:".$wind_sc."\n"."风速:".$wind_spd."公里/小时"."\n";
+                    echo "<xml>
+                              <ToUserName><![CDATA[".$openid."]]></ToUserName>
+                              <FromUserName><![CDATA[".$wx_id."]]></FromUserName>
+                              <CreateTime>".time()."</CreateTime>
+                              <MsgType><![CDATA[text]]></MsgType>
+                              <Content><![CDATA[".$str."]]></Content>
+                          </xml>";
+                }
+            }else{
+                $sedata=$this->seach($obj);
+            }
+        }else if($type=='image'){
+            $media_id=$obj->MediaId;
+        }else if($type='event'){
+            $event=$obj->Event;
+            $EventKey=$obj->EventKey;
+            $goods_id=substr($EventKey,0,1);
+                switch($event){
+                    case 'SCAN':
+                        if(isset($obj->EventKey)){
+                            $this->qrcode($obj);//扫带参数二维码
+                        }
+                        break;
+                    case 'subscribe':
+                        $this->subscribe($obj);//扫码关注
+                        break;
+                    default:
+                        $response_xml = 'success';
                 }
 
-            }
-        }else if($type=='text'){
-            $sedata=$this->seach($obj);
+                echo $response_xml;
+
 
         }
     }
