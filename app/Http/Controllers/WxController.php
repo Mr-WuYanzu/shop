@@ -354,6 +354,8 @@ class WxController extends Controller
         ]);
         if(json_decode($response->getBody(),true)['errcode']==0){
             echo '发送成功';
+        }else{
+            echo '发送失败';
         }
     }
 
