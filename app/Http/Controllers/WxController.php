@@ -352,6 +352,7 @@ class WxController extends Controller
         $response=$client->request('POST',$url,[
             'body'=>$str
         ]);
+        dd($response->getBody());
         if(json_decode($response->getBody(),true)['errcode']==0){
             echo '发送成功';
         }else{
