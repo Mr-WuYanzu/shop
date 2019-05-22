@@ -70,6 +70,8 @@ Route::get('weixin/signIn','WxController@signIn');
 Route::get('weixin/savegoodsname','WxController@savegoodsname');
 //设置所属行业
 Route::get('weixin/set','WxController@set');
+//微信群发消息
+Route::get('/send_valid','WxController@send_valid');
 
 
 

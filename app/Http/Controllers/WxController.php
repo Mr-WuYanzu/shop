@@ -330,6 +330,32 @@ class WxController extends Controller
 
 
     }
+    //微信群发消息
+    public function send_valid(){
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token='.getAccessToken();
+        $openid=User::get();
+        if($openid){
+            $openid=$openid->toArray();
+        }
+        $openid=array_column($openid,'openid');
+        $arr=[
+            'touser'=>[
+                $openid
+            ],
+            'msgtype'=>'text',
+            'text'=>[
+                'content'=>'hello pig'
+            ]
+        ];
+        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $client=new Client();
+        $response=$client->request('POST',$url,[
+            'body'=>$str
+        ]);
+        if(json_decode($response->getBody(),true)['errcode']==0){
+            echo '发送成功';
+        }
+    }
 
     //获取微信的素材
     public function fodder(){
